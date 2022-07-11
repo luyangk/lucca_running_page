@@ -5,14 +5,13 @@ const MAPBOX_TOKEN =
 const MUNICIPALITY_CITIES_ARR = [
   '北京市',
   '上海市',
-  '天津市',
-  '重庆市',
+  '深圳市',
   '香港特别行政区',
   '澳门特别行政区',
 ];
 
 // styling: set to `true` if you want dash-line route
-const USE_DASH_LINE = true;
+const USE_DASH_LINE = false;
 // styling: route line opacity: [0, 1]
 const LINE_OPACITY = 0.4;
 
@@ -21,7 +20,7 @@ const IS_CHINESE = true;
 const USE_ANIMATION_FOR_GRID = false;
 const CHINESE_INFO_MESSAGE = (yearLength, year) => {
   const yearStr = year === 'Total' ? '所有' : ` ${year} `;
-  return `我用 App 记录自己跑步 ${yearLength} 年了，下面列表展示的是${yearStr}的数据`;
+  return `我记录自己跑步 ${yearLength} 年了，下面列表展示的是${yearStr}的数据`;
 }
 const ENGLISH_INFO_MESSAGE = (yearLength, year) =>
   `Running Journey with ${yearLength} Years, the table shows year ${year} data`;
@@ -63,7 +62,7 @@ export {
   LINE_OPACITY,
 };
 
-const nike = 'rgb(224,237,94)'; // if you want change the main color change here src/styles/variables.scss
+const nike = 'rgb(94, 230, 237)'; // if you want change the main color change here src/styles/variables.scss
 
 // If your map has an offset please change this line
 // issues #92 and #198

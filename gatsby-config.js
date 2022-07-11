@@ -2,18 +2,18 @@ module.exports = {
   pathPrefix: '/running_page', // Change to `/running_page` when running on github pages
   siteMetadata: {
     siteTitle: 'Lucca\'s Running Page',
-    siteUrl: 'https://vercel.com/luccalu',
-    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTtc69JxHNcmN1ETpMUX4dozAgAN6iPjWalQ&usqp=CAU',
-    description: 'Personal Running Page',
+    siteUrl: 'https://luyangk.github.io/lucca_running_page',
+    logo: './assets/lrp-logo.png',
+    description: 'Personal Running Data',
     navLinks: [
       {
         name: 'Vlog',
-        url: 'https://vercel.com/luccalu/running',
+        url: 'https://space.bilibili.com/14014084',
       },
-      {
-        name: 'About',
-        url: 'https://vercel.com/luccalu/about',
-      },
+      // {
+      //   name: 'About',
+      //   url: 'https://luyangk.github.io/',
+      // },
     ],
   },
   plugins: [
