@@ -3,7 +3,7 @@ module.exports = {
   siteMetadata: {
     siteTitle: 'Lucca\'s Running Page',
     siteUrl: 'https://luyangk.github.io/lucca_running_page',
-    logo: '/assets/lrp-logo.png',
+    logo: 'assets/lrp-logo.png',
     description: 'Personal Running Data',
     navLinks: [
       {
