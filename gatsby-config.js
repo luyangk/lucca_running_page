@@ -1,9 +1,9 @@
 module.exports = {
-  pathPrefix: '/running_page', // Change to `/running_page` when running on github pages
+  pathPrefix: '/lucca_running_page', // Change to `/running_page` when running on github pages
   siteMetadata: {
     siteTitle: 'Lucca\'s Running Page',
     siteUrl: 'https://luyangk.github.io/lucca_running_page',
-    logo: 'assets/lrp-logo.png',
+    logo: 'https://lucca-pic-store.oss-cn-shanghai.aliyuncs.com/lrp-logo.png',
     description: 'Personal Running Data',
     navLinks: [
       {
