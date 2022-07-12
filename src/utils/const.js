@@ -3,11 +3,11 @@ const MAPBOX_TOKEN =
     'pk.eyJ1IjoibHV5YW5nayIsImEiOiJjbDVmaHp2NWExYmtxM2NwZTVkdGZpbHI1In0.0NSZPhJF_YuZawOUSPZ6Ng';
 //  'pk.eyJ1IjoieWlob25nMDYxOCIsImEiOiJja2J3M28xbG4wYzl0MzJxZm0ya2Fua2p2In0.PNKfkeQwYuyGOTT_x9BJ4Q';
 const MUNICIPALITY_CITIES_ARR = [
-  '北京市',
   '上海市',
+  '浙江省',
+  '江苏省',
+  '北京市',
   '深圳市',
-  '香港特别行政区',
-  '澳门特别行政区',
 ];
 
 // styling: set to `true` if you want dash-line route
@@ -20,15 +20,16 @@ const IS_CHINESE = true;
 const USE_ANIMATION_FOR_GRID = false;
 const CHINESE_INFO_MESSAGE = (yearLength, year) => {
   const yearStr = year === 'Total' ? '所有' : ` ${year} `;
-  return `我记录自己跑步 ${yearLength} 年了，下面列表展示的是${yearStr}的数据`;
+  return `我开始记录自己跑步 ${yearLength} 年了，下面列表展示的是${yearStr}的数据。`;
 }
 const ENGLISH_INFO_MESSAGE = (yearLength, year) =>
   `Running Journey with ${yearLength} Years, the table shows year ${year} data`;
 
 // not support English for now
-const CHINESE_LOCATION_INFO_MESSAGE_FIRST =
-  '我跑过了一些地方，希望随着时间推移，地图点亮的地方越来越多';
-const CHINESE_LOCATION_INFO_MESSAGE_SECOND = '不要停下来，不要停下奔跑的脚步';
+// const CHINESE_LOCATION_INFO_MESSAGE_FIRST = '我跑过了一些地方，希望随着时间推移，地图点亮的地方越来越多';
+// const CHINESE_LOCATION_INFO_MESSAGE_SECOND = '不要停下来，不要停下奔跑的脚步';
+const CHINESE_LOCATION_INFO_MESSAGE_FIRST = '跑过的路、见过风景越多，越能体会生活的美好';
+const CHINESE_LOCATION_INFO_MESSAGE_SECOND = '跑步不在于有多快，而在于能坚持多久';
 
 const INFO_MESSAGE = IS_CHINESE ? CHINESE_INFO_MESSAGE : ENGLISH_INFO_MESSAGE;
 const FULL_MARATHON_RUN_TITLE = IS_CHINESE ? '全程马拉松' : 'Full Marathon';
@@ -62,7 +63,7 @@ export {
   LINE_OPACITY,
 };
 
-const nike = 'rgb(94, 230, 237)'; // if you want change the main color change here src/styles/variables.scss
+const nike = 'rgb(70, 130, 180)'; // 'rgb(0, 90, 180)'; // 'rgb(94, 230, 237)'; // if you want change the main color change here src/styles/variables.scss
 
 // If your map has an offset please change this line
 // issues #92 and #198
