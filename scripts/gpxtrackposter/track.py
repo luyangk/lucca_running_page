@@ -148,7 +148,7 @@ class Track:
                 try:
                     heart_rate_list.extend(
                         [
-                            int(p.extensions[0].getchildren()[0].text)
+                            int(p.extensions[0].getchildren()[1].text)
                             for p in s.points
                             if p.extensions
                         ]
