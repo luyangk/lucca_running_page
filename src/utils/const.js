@@ -5,9 +5,13 @@ const MAPBOX_TOKEN =
 const MUNICIPALITY_CITIES_ARR = [
   '上海市',
   '浙江省',
+  '宁波市',
   '江苏省',
   '北京市',
   '深圳市',
+  '甘肃省',
+  '内蒙古',
+  '宁夏回族自治区',
 ];
 
 // styling: set to `true` if you want dash-line route
