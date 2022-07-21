@@ -15,6 +15,7 @@ const useActivities = () => {
             type
             average_speed
             average_heartrate
+            average_temp
             location_country
             start_date
             start_date_local

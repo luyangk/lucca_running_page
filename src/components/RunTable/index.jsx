@@ -38,6 +38,10 @@ const RunTable = ({
       return bDistance * bPace - aDistance * aPace;
     }
   };
+  const sortTempFunc = (a, b) =>
+    sortFuncInfo === 'Temp'
+      ? a.average_temp - b.average_temp
+      : b.average_temp - a.average_temp;
   const sortDateFuncClick =
     sortFuncInfo === 'Date' ? sortDateFunc : sortDateFuncReverse;
   const sortFuncMap = new Map([
@@ -45,6 +49,7 @@ const RunTable = ({
     ['Pace', sortPaceFunc],
     ['BPM', sortBPMFunc],
     ['Time', sortRunTimeFunc],
+    ['Temp', sortTempFunc],
     ['Date', sortDateFuncClick],
   ]);
   const handleClick = (e) => {

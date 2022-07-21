@@ -11,9 +11,9 @@ const RunRow = ({ runs, run, locateActivity, runIndex, setRunIndex }) => {
 
   const heartRate = run.average_heartrate;
 
-  const temp = run.average
-
   const runTime = formatRunTime(distance,pace);
+
+  const temp = run.average_temp;
 
   // change click color
   const handleClick = (e, runs, run) => {
@@ -41,6 +41,7 @@ const RunRow = ({ runs, run, locateActivity, runIndex, setRunIndex }) => {
       {pace && <td>{paceParts}</td>}
       <td>{heartRate && heartRate.toFixed(0)}</td>
       <td>{runTime}</td>
+      <td>{temp && temp.toFixed(0)}</td>
       <td className={styles.runDate}>{run.start_date_local}</td>
     </tr>
   );

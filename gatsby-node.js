@@ -10,6 +10,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       type: String
       average_speed: Float
       average_heartrate: Float
+      average_temp: Float
       location_country: String
       start_date: Date
       start_date_local: Date
