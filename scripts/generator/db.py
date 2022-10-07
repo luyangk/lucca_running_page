@@ -28,16 +28,13 @@ ACTIVITY_KEYS = [
     "run_id",
     "name",
     "distance",
-    # "pending_distance",
     "moving_time",
-    # "pending_time",
     "type",
     "start_date",
     "start_date_local",
     "location_country",
     "summary_polyline",
     "average_heartrate",
-    "average_temp",
     "average_speed",
 ]
 
@@ -48,17 +45,14 @@ class Activity(Base):
     run_id = Column(Integer, primary_key=True)
     name = Column(String)
     distance = Column(Float)
-    # pending_distance = Column(Float)
     moving_time = Column(Interval)
     elapsed_time = Column(Interval)
-    # pending_time = Column(Interval)
     type = Column(String)
     start_date = Column(String)
     start_date_local = Column(String)
     location_country = Column(String)
     summary_polyline = Column(String)
     average_heartrate = Column(Float)
-    average_temp = Column(Float)
     average_speed = Column(Float)
     streak = None
 
@@ -104,36 +98,34 @@ def update_or_create_activity(session, run_activity):
                         pass
 
             activity = Activity(
-                run_id = run_activity.id,
-                name = run_activity.name,
-                distance = run_activity.distance,
-                # pending_distnace = float(run_activity.pending_distance),
-                moving_time = run_activity.moving_time,
-                elapsed_time = run_activity.elapsed_time,
-                # pending_time = run_activity.pending_time,
-                type = run_activity.type,
-                start_date = run_activity.start_date,
-                start_date_local = run_activity.start_date_local,
-                location_country = location_country,
-                average_heartrate = run_activity.average_heartrate,
-                average_temp = run_activity.average_temp,
-                average_speed = run_activity.average_speed,
-                summary_polyline=run_activity.map.summary_polyline,
+                run_id=run_activity.id,
+                name=run_activity.name,
+                distance=run_activity.distance,
+                moving_time=run_activity.moving_time,
+                elapsed_time=run_activity.elapsed_time,
+                type=run_activity.type,
+                start_date=run_activity.start_date,
+                start_date_local=run_activity.start_date_local,
+                location_country=location_country,
+                average_heartrate=run_activity.average_heartrate,
+                average_speed=float(run_activity.average_speed),
+                summary_polyline=(
+                    run_activity.map and run_activity.map.summary_polyline or ""
+                ),
             )
             session.add(activity)
             created = True
         else:
             activity.name = run_activity.name
-            activity.distance = run_activity.distance
-            # activity.pending_distance = float(run_activity.pending_distance)
+            activity.distance = float(run_activity.distance)
             activity.moving_time = run_activity.moving_time
             activity.elapsed_time = run_activity.elapsed_time
-            # activity.pending_time = run_activity.pending_time
             activity.type = run_activity.type
             activity.average_heartrate = run_activity.average_heartrate
-            activity.average_temp = run_activity.average_temp
-            activity.average_speed = run_activity.average_speed
-            activity.summary_polyline = run_activity.map.summary_polyline
+            activity.average_speed = float(run_activity.average_speed)
+            activity.summary_polyline = (
+                run_activity.map and run_activity.map.summary_polyline or ""
+            )
     except Exception as e:
         print(f"something wrong with {run_activity.id}")
         print(str(e))

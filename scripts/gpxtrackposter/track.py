@@ -29,14 +29,11 @@ class Track:
         self.polyline_str = ""
         self.start_time = None
         self.end_time = None
-        # self.pend_time = None 
         self.start_time_local = None
         self.end_time_local = None
-        # self.pend_time_local = None 
         self.length = 0
         self.special = False
         self.average_heartrate = None
-        self.average_temp = None 
         self.moving_dict = {}
         self.run_id = 0
         self.start_latlng = []
@@ -82,7 +79,7 @@ class Track:
         )
         self.start_time_local = start_time
         self.end_time = start_time + activity.elapsed_time
-        self.length = float(activity.distance) # - float(activity.pending_distance)
+        self.length = float(activity.distance)
         summary_polyline = activity.summary_polyline
         polyline_data = polyline.decode(summary_polyline) if summary_polyline else []
         self.polylines = [[s2.LatLng.from_degrees(p[0], p[1]) for p in polyline_data]]
@@ -147,7 +144,6 @@ class Track:
         gpx.simplify()
         polyline_container = []
         heart_rate_list = []
-        temp_list = []
         for t in gpx.tracks:
             for s in t.segments:
                 try:
@@ -156,8 +152,8 @@ class Track:
                             lxml.etree.QName(child).localname: child.text
                             for child in p.extensions[0]
                         }
-                        for p in s.points 
-                        if p.extensions 
+                        for p in s.points
+                        if p.extensions
                     ]
                     heart_rate_list.extend(
                         [
@@ -166,15 +162,7 @@ class Track:
                             if extensions
                         ]
                     )
-                    temp_list.extend(
-                        [
-                            float(p["atemp"]) if p.__contains__("atemp") else None
-                            for p in extensions 
-                            if extensions
-                        ]
-                    )
                     heart_rate_list = list(filter(None, heart_rate_list))
-                    temp_list = list(filter(None, temp_list))
                 except:
                     pass
                 line = [
@@ -194,9 +182,6 @@ class Track:
         self.polyline_str = polyline.encode(polyline_container)
         self.average_heartrate = (
             sum(heart_rate_list) / len(heart_rate_list) if heart_rate_list else None
-        )
-        self.average_temp = (
-            sum(temp_list) / len(temp_list) if temp_list else None
         )
         self.moving_dict = self._get_moving_data(gpx)
 
@@ -225,10 +210,7 @@ class Track:
 
     @staticmethod
     def _get_moving_data(gpx):
-        # stopped_speed_threshold : float
-        # speeds (km/h) below this threshold are treated as if having no
-        # movement. Default is 1 km/h.
-        moving_data = gpx.get_moving_data(stopped_speed_threshold=3)
+        moving_data = gpx.get_moving_data()
         return {
             "distance": moving_data.moving_distance,
             "moving_time": datetime.timedelta(seconds=moving_data.moving_time),
@@ -252,9 +234,6 @@ class Track:
             "length": self.length,
             "average_heartrate": int(self.average_heartrate)
             if self.average_heartrate
-            else None,
-            "average_temp": float(self.average_temp)
-            if self.average_temp
             else None,
             "map": run_map(self.polyline_str),
             "start_latlng": self.start_latlng,
