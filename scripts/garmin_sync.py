@@ -248,8 +248,8 @@ class GarminConnectAuthenticationError(Exception):
         self.status = status
 
 
-async def download_garmin_data(client, activity_id, file_type="gpx"):
-    folder = FOLDER_DICT.get(file_type, "gpx")
+async def download_garmin_data(client, activity_id, file_type="gpx", folder):
+#    folder = FOLDER_DICT.get(file_type, "gpx")
     try:
         file_data = await client.download_activity(activity_id, file_type=file_type)
         file_path = os.path.join(folder, f"{activity_id}.{file_type}")
@@ -299,7 +299,7 @@ async def download_new_activities(
     await gather_with_concurrency(
         10,
         [
-            download_garmin_data(client, id, file_type=file_type)
+            download_garmin_data(client, id, file_type=file_type, folder)
             for id in to_generate_garmin_ids
         ],
     )
