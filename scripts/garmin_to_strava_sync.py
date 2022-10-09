@@ -50,7 +50,12 @@ if __name__ == "__main__":
     if email == None or password == None:
         print("Missing argument nor valid configuration file")
         sys.exit(1)
+#    folder = FOLDER_DICT.get(file_type, "gpx")
+#    downloaded_ids = get_downloaded_ids(folder)
     folder = FOLDER_DICT.get(file_type, "gpx")
+    # make gpx or tcx dir
+    if not os.path.exists(folder):
+        os.mkdir(folder)
     downloaded_ids = get_downloaded_ids(folder)
 
     loop = asyncio.get_event_loop()
