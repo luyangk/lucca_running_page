@@ -19,5 +19,5 @@ _site/
 
 config.yaml
 
-/GPX_OUT/*.gpx
-/TCX_OUT/*.tcx
+# /GPX_OUT/*.gpx
+# /TCX_OUT/*.tcx
