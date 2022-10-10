@@ -3,7 +3,7 @@ name: Backup Garmin to Strava
 on:
   workflow_dispatch:
   schedule:
-    - cron: "15 1/7 * * *"
+    - cron: "15 1/15 * * *"
   push:
     branches:
       - master
