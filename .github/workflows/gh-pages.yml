@@ -21,7 +21,7 @@ on:
 #    - cron: "30 1/16 * * *"
 
   workflow_run:
-    workflows: ["Sync Garmin Manu"]
+    workflows: ["Backup Strava to Garmin CN"]
     types:
       - completed
 
