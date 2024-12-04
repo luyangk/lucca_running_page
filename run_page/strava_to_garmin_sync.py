@@ -136,7 +136,7 @@ if __name__ == "__main__":
     # print(f"email: {options.strava_email}")
     # print(f"password opt: {options.strava_password}")
     strava_web_client = WebClient(
-        # access_token=strava_client.access_token,
+        access_token=strava_client.access_token,
         email=options.strava_email,
         password=options.strava_password,
     )
