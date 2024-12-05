@@ -12,7 +12,7 @@ interface ISiteMetadataResult {
 const data: ISiteMetadataResult = {
   siteTitle: 'Lucca\'s Running Page',
   siteUrl: 'https://luyangk.github.io/lucca_running_page/',
-  logo: 'https://sm.ms/image/SKlYA1xqfwVOW8b',
+  logo: 'https://s2.loli.net/2024/12/04/SKlYA1xqfwVOW8b.png',
   description: 'Personal running site',
   navLinks: [
     {
