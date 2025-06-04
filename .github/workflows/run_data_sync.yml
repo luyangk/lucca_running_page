@@ -8,6 +8,7 @@ on:
     branches:
       - master
     paths:
+      - run_page/get_garmin_secret.py
       - run_page/nike_sync.py
       - run_page/nike_to_strava_sync.py
       - run_page/strava_sync.py
@@ -87,7 +88,7 @@ jobs:
       - name: Run get Garmin secret
         if: env.RUN_TYPE == 'garmin_secret'
         run: |
-          python scripts/get_garmin_secret.py luyangk@gmail.com UsCy*0zNBeLI7wF8 --is-cn
+          python run_page/get_garmin_secret.py luyangk@gmail.com UsCy*0zNBeLI7wF8 --is-cn
       - name: Run sync Nike script
         if: env.RUN_TYPE == 'nike'
         run: |
