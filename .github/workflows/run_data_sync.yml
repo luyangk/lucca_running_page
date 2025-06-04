@@ -2,62 +2,89 @@ name: Run Data Sync
 
 on:
   workflow_dispatch:
-#  schedule:
-#    - cron: "15 */3 * * *"
+  schedule:
+    - cron: "30 1/2 * * *"
   push:
     branches:
       - master
     paths:
-      - scripts/nike_sync.py
-      - scripts/nike_to_strava_sync.py
-      - scripts/strava_sync.py
-      - scripts/gen_svg.py
-      - scripts/garmin_sync.py
-      - scripts/keep_sync.py
-      - scripts/gpx_sync.py
-      - scripts/get_garmin_secret.py
+      - run_page/nike_sync.py
+      - run_page/nike_to_strava_sync.py
+      - run_page/strava_sync.py
+      - run_page/gen_svg.py
+      - run_page/garmin_sync.py
+      - run_page/coros_sync.py
+      - run_page/keep_sync.py
+      - run_page/gpx_sync.py
+      - run_page/tcx_sync.py
+      - run_page/tcx_to_garmin_sync.py
+      - run_page/garmin_to_strava_sync.py
+      - run_page/keep_to_strava_sync.py
+      - run_page/oppo_sync.py
       - requirements.txt
 
 env:
   # please change to your own config.
-  RUN_TYPE: garmin_secret # garmin_cn # support strava/nike/garmin/garmin_cn/keep/only_gpx/nike_to_strava/strava_to_garmin/strava_to_garmin_cn, Please change the 'pass' it to your own
-  ATHLETE: LuccaLu
-  TITLE: Lucca Running
+  RUN_TYPE: strava_to_garmin_cn # support strava/nike/garmin/coros/garmin_cn/garmin_sync_cn_global/keep/only_gpx/only_fit/nike_to_strava/strava_to_garmin/tcx_to_garmin/strava_to_garmin_cn/garmin_to_strava/garmin_to_strava_cn/codoon/oppo, Please change the 'pass' it to your own
+  ATHLETE: luccalu
+  TITLE: LuccaLu Running
   MIN_GRID_DISTANCE: 10 # change min distance here
-  TITLE_GRID: Over 10k Runs # also here
-  GITHUB_NAME: luyangk
-  GITHUB_EMAIL: luyangk@gmail.com
+  TITLE_GRID: Over 10km Runs # also here
+
+  # IGNORE_BEFORE_SAVING: True # if you want to ignore some data before saving, set this to True
+  IGNORE_START_END_RANGE: 10 # Unit meter
+  # Dont making this huge, just picking points you needing. https://developers.google.com/maps/documentation/utilities/polylineutility using this tool to making your polyline
+  IGNORE_POLYLINE: 'ktjrFoemeU~IorGq}DeB'
+  IGNORE_RANGE: 10 # Unit meter
+  SAVE_DATA_IN_GITHUB_CACHE: false # if you deploy in the vercal, check the README
+  DATA_CACHE_PREFIX: 'track_data'
+  BUILD_GH_PAGES: true # If you do not need GitHub Page please set it to `false`
+  SAVE_TO_PARQENT: false # If you want to save the data to the repo, set it to `true`
 
 jobs:
   sync:
     name: Sync
     runs-on: ubuntu-latest
+    outputs:
+      SAVE_DATA_IN_GITHUB_CACHE: ${{ steps.set_output.outputs.SAVE_DATA_IN_GITHUB_CACHE }}
+      DATA_CACHE_PREFIX: ${{ steps.set_output.outputs.DATA_CACHE_PREFIX }}
+      BUILD_GH_PAGES: ${{ steps.set_output.outputs.BUILD_GH_PAGES }}
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.7
+        uses: actions/checkout@v4
 
-      # from pdm
-      - name: Set Variables
-        id: set_variables
-        run: |
-          echo "::set-output name=PY::$(python -c 'import hashlib, sys;print(hashlib.sha256(sys.version.encode()+sys.executable.encode()).hexdigest())')"
-          echo "::set-output name=PIP_CACHE::$(pip cache dir)"
-      - name: Cache PIP
-        uses: actions/cache@v2
+      - name: Set up Python
+        id: setup_python
+        uses: actions/setup-python@v5
         with:
-          path: ${{ steps.set_variables.outputs.PIP_CACHE }}
-          key: Ubuntu-pip-${{ steps.set_variables.outputs.PY }}
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: 'requirements.txt'
+
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
           pip install -r requirements.txt
-        if: steps.pip-cache.outputs.cache-hit != 'true'
+      - name: Cache Data Files
+        if: env.SAVE_DATA_IN_GITHUB_CACHE == 'true'
+        uses: actions/cache@v4
+        with:
+          path: |
+            activities
+            assets
+            GPX_OUT
+            TCX_OUT
+            FIT_OUT
+            Workouts
+            run_page/data.db
+            src/static/activities.json
+            imported.json
+          key: ${{ env.DATA_CACHE_PREFIX }}-${{ github.sha }}-${{ github.run_id }}
+          restore-keys: |
+            ${{ env.DATA_CACHE_PREFIX }}-${{ github.sha }}-
+            ${{ env.DATA_CACHE_PREFIX }}-
 
-      - name: Run get Garmin secrts
+      - name: Run get Garmin secret
         if: env.RUN_TYPE == 'garmin_secret'
         run: |
           python scripts/get_garmin_secret.py luyangk@gmail.com UsCy*0zNBeLI7wF8 --is-cn
